@@ -1,0 +1,13 @@
+.setting-pending {
+  background-color: #ffa1a1 !important;
+}
+@media (max-width: 768px) {
+  .action-col{
+    width: 100px !important;
+  }
+  ul.OutstandingTab li {
+    display: block;
+   margin-bottom: 15px;
+   margin-right: 0px;
+}
+}

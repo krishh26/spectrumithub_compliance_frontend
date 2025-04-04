@@ -1,0 +1,19 @@
+.sidebar-item.active {
+  background-color: #f8f9fa; /* or any highlight color */
+}
+.sidebar.collapsed {
+  width: 0;
+  overflow: hidden;
+}
+@media (max-width: 576px) {
+  .dropdown-menu {
+    display: block !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: 50px !important;
+    width: auto;
+  }
+}
+.dropdown-menu {
+  z-index: 1050 !important;
+}

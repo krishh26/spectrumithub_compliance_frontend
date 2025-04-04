@@ -1,0 +1,13 @@
+.info-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #f86464; /* Bootstrap info color */
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}

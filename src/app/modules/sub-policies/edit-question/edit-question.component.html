@@ -1,0 +1,107 @@
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center">
+  <h2>
+    <a (click)="back()" class="me-2 text-dark">
+      <i class="bi bi-arrow-left-circle"></i>
+    </a>
+  </h2>
+</div>
+
+<div class="p-2 bg-light rounded mt-2 text-center">
+  <h2 class="fw-bold">Edit Question</h2>
+</div>
+
+<div class="card border mt-4">
+  <div class="card-body">
+    <form [formGroup]="questionForm" (ngSubmit)="submitForm()">
+      <div class="border p-3 mb-3">
+        <div class="form-group">
+          <label>Question Type</label>
+          <select
+            class="form-select"
+            formControlName="questionType"
+            (change)="onTypeChange()"
+          >
+            <option *ngFor="let type of questionTypes" [value]="type.value">
+              {{ type.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Question Title</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="questionText"
+            placeholder="Enter question"
+          />
+        </div>
+        <div
+          *ngIf="
+            questionForm.get('questionText')?.invalid &&
+            questionForm.get('questionText')?.touched
+          "
+          class="text-danger"
+        >
+          Question is required.
+        </div>
+
+        <!-- Options Section -->
+        <div formArrayName="options" class="mt-3">
+          <div class="row">
+            <div
+              *ngFor="let option of options.controls; let i = index"
+              class="col-lg-3 col-xl-3 col-sm-6 col-md-6 col-12"
+            >
+              <div class="form-group">
+                <label>Option {{ getOptionLabel(i) }}.</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [formControlName]="i"
+                  placeholder="Enter option"
+                />
+              </div>
+              <div *ngIf="option.invalid && option.touched" class="text-danger">
+                Option cannot be empty.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-lg-3 col-xl-3 col-sm-6 col-md-6 col-12">
+            <div class="form-group">
+              <label> Answer :</label>
+              <select
+                class="form-select"
+                formControlName="answer"
+                [multiple]="questionForm.get('questionType')?.value === '1'"
+              >
+                <option *ngFor="let option of options.value" [value]="option">
+                  {{ option }}
+                </option>
+              </select>
+            </div>
+            <div
+              *ngIf="
+                questionForm.get('answer')?.invalid &&
+                questionForm.get('answer')?.touched
+              "
+              class="text-danger"
+            >
+              Answer is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="row justify-content-center">
+          <div class="col-lg-2 col-xl-2 col-md-3 col-sm-3 col-12">
+            <button type="submit" class="btn btn-success w-100 mt-3">Update</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

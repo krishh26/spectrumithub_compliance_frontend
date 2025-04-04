@@ -1,0 +1,122 @@
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-input-wrapper input {
+  padding-right: 40px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6c757d;
+  padding: 5px;
+  transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+  color: #495057;
+}
+
+.password-toggle i {
+  font-size: 1.2rem;
+}
+
+/* Login page responsive styles */
+.login-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.login-leftside {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  padding: 2rem;
+}
+
+.login-leftside img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Responsive styles */
+@media (max-width: 991px) {
+  .login-leftside {
+    display: none; /* Hide on mobile by default */
+  }
+
+  .login-container .col-lg-5 {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .login-leftside {
+    display: flex;
+  }
+}
+
+/* Additional mobile optimizations */
+@media (max-width: 576px) {
+  .login-container .col-lg-5 {
+    padding: 0.5rem;
+  }
+
+  .LoginForm {
+    padding: 1rem;
+  }
+
+  .LoginForm h1 {
+    font-size: 1.5rem;
+  }
+
+  .LoginForm .lead {
+    font-size: 1rem;
+  }
+
+  .form-control-lg {
+    font-size: 1rem;
+  }
+
+  .btn-lg {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* Password input responsive styles */
+@media (max-width: 768px) {
+  .password-toggle {
+    right: 8px;
+  }
+
+  .password-toggle i {
+    font-size: 1.1rem;
+  }
+
+  .password-input-wrapper input {
+    padding-right: 35px;
+  }
+}
+
+@media (max-width: 576px) {
+  .password-toggle {
+    right: 5px;
+  }
+
+  .password-toggle i {
+    font-size: 1rem;
+  }
+
+  .password-input-wrapper input {
+    padding-right: 30px;
+  }
+}

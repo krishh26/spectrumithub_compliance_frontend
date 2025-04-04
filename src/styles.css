@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import url('assets/css/bootstrap-icons.css');
+@import url('assets/css/summernote-lite.min.css');
+@import url('assets/css/app-new.css');
+@import url('assets/css/toast.css');
+@import url('assets/css/compilance-style.css');
+ul.linemanager-emplyee-btn{
+  display: block;
+}
+ul.linemanager-emplyee-btn li{
+  display: inline-block;
+  width: 49%;
+}
+ul.linemanager-emplyee-btn li a{
+ display: block;
+ background-color: #D9D9D9;
+ padding: 1rem;
+ color: #000;
+ text-align: center;
+ font-weight: 600;
+}
+ul.linemanager-emplyee-btn li a:hover,
+ul.linemanager-emplyee-btn li a.active{
+  background-color: #4285F4;
+  color: #FFF;
+  text-decoration: none;
+}

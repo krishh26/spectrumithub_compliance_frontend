@@ -1,0 +1,154 @@
+<div class="container-fluid p-0">
+  <div class="card">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col-lg-8 col-xl-8 col-md-8 col-sm-8 col-6">
+          <ul class="OutstandingTab">
+            <li>
+              <a routerLink="/compliance-test/outstanding" class="first-child active">
+                <img src="assets/img/icons/outstanding-icon.png" /> Outstanding </a>
+            </li>
+            <li>
+              <a routerLink="/compliance-test/completed" class="second-child">
+                <img src="assets/img/icons/completed-icon.png" /> Completed </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group mob-mb1">
+            <span class="input-icon-left" style="top: 25px">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-search align-middle">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input type="text" class="form-control form-control-search" placeholder="Search by Test Name..."
+              [formControl]="searchText" style="padding: 1.5rem 1rem 1.5rem 2.5rem" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Compliance Test</th>
+              <th scope="col">Complete Before</th>
+              <th scope="col">Start</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td *ngIf="!outstandingtestlist?.length" colspan="6">
+                <app-no-record-found></app-no-record-found>
+              </td>
+            </tr>
+            <ng-container *ngFor="let item of outstandingtestlist | paginate
+            : {
+                itemsPerPage: pagesize,
+                currentPage: page,
+                totalItems: totalRecords
+              };
+              let i = index">
+              <!-- <tr>
+                <td>
+                  <a [routerLink]="['/employee-policies/terms-condition-employee/', item._id]"
+                    class="text-primary">{{item?.policyDetail?.[0]?.[0]?.name}} - ({{item?.version}})</a>
+                </td>
+                <td>{{item?.policySettingDetails?.[0]?.examTimeLimit | gmtDate }}</td>
+                <td>
+                  <span
+                    *ngIf="item?.conditionDetail?.length && item?.policyDetail?.[0]?.[0]?.policyType != 'For Information'">
+                    <a *ngIf="item?.resultDetails?.[0]?.length == 0"
+                      [routerLink]="['/compliance-test/instruction', item._id]" class="btn btn-primary btn-sm">Begin</a>
+
+                    <div *ngIf="item?.resultDetails?.[0]?.length > 0" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                      <a [routerLink]="['/compliance-test/instruction', item._id]" class="btn btn-primary btn-sm">Re
+                        Exam</a>
+                      <a class="text-danger"> 2 Days Left </a>
+                    </div>
+                  </span>
+
+
+                  <a *ngIf="item?.conditionDetail?.length && item?.policyDetail?.[0]?.[0]?.policyType == 'For Information'"
+                    class="text-secondary" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Please read and acknowledge the company policy document. No further action is required."
+                    (click)="showTooltip($event)">For Information</a>
+                  <ng-container *ngIf="!item?.conditionDetail || item?.conditionDetail?.length == 0">
+                    <div *ngIf="item?.policyDetail?.[0]?.[0]?.policyType != 'For Information'" class="info-icon"
+                      data-bs-toggle="tooltip" data-bs-placement="top"
+                      title="Please read and acknowledge the company policy document. Once acknowledged, you will be able to take the exam."
+                      (click)="showTooltip($event)"> i </div>
+                    <div *ngIf="item?.policyDetail?.[0]?.[0]?.policyType == 'For Information'" data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="Please read and acknowledge the company policy document. No further action is required."
+                      (click)="showTooltip($event)"> For Information </div>
+                  </ng-container>
+                </td>
+              </tr> -->
+              <tr>
+                <td>
+                  <a [routerLink]="['/employee-policies/terms-condition-employee/', item?.subPoliciyDetail?.[0]?._id]"
+                    class="text-primary">{{item?.name}} - ({{item?.subPoliciyDetail?.[0]?.version}})</a>
+                </td>
+                <td>{{(item?.subPoliciyDetail?.[0]?.policyDueDate?.length > 0 ?
+                  item?.subPoliciyDetail?.[0]?.policyDueDate?.[0]?.dueDate :
+                  item?.subPoliciyDetail?.[0]?.policySettingDetail?.examTimeLimit) | gmtDate }}</td>
+                <td>
+                  <span
+                    *ngIf="item?.subPoliciyDetail?.[0]?.conditionDetail?.length && item?.policyType != 'For Information'">
+                    <a *ngIf="item?.subPoliciyDetail?.[0]?.resultDetails?.length == 0"
+                      [routerLink]="['/compliance-test/instruction', item?.subPoliciyDetail?.[0]?._id]"
+                      class="btn btn-primary btn-sm">Begin</a>
+
+                    <div *ngIf="item?.subPoliciyDetail?.[0]?.resultDetails?.length > 0"
+                      style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+
+                      <a *ngIf="dayLeft(item?.subPoliciyDetail?.[0]?.resultDetails, item?.subPoliciyDetail?.[0]?.policySettingDetail?.maximumRettemptDaysLeft,  item?.subPoliciyDetail?.[0]?.policySettingDetail?.maximumAttempt) == 'ReExam'"
+                        [routerLink]="['/compliance-test/instruction', item?.subPoliciyDetail?.[0]?._id]"
+                        class="btn btn-primary btn-sm">Re
+                        Exam</a>
+
+                      <a *ngIf="dayLeft(item?.subPoliciyDetail?.[0]?.resultDetails, item?.subPoliciyDetail?.[0]?.policySettingDetail?.maximumRettemptDaysLeft,  item?.subPoliciyDetail?.[0]?.policySettingDetail?.maximumAttempt) !== 'ReExam'"
+                        class="text-danger"> {{ dayLeft(item?.subPoliciyDetail?.[0]?.resultDetails,
+                        item?.subPoliciyDetail?.[0]?.policySettingDetail?.maximumRettemptDaysLeft,
+                        item?.subPoliciyDetail?.[0]?.policySettingDetail?.maximumAttempt) }} </a>
+
+                    </div>
+                  </span>
+                  <a *ngIf="item?.subPoliciyDetail?.[0]?.conditionDetail?.length && item?.policyType == 'For Information'"
+                    class="text-secondary" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Please read and acknowledge the company policy document. No further action is required."
+                    (click)="showTooltip($event)">For Information</a>
+                  <ng-container
+                    *ngIf="!item?.subPoliciyDetail?.[0]?.conditionDetail || item?.subPoliciyDetail?.[0]?.conditionDetail?.length == 0">
+                    <div *ngIf="item?.policyType != 'For Information'" class="info-icon" data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="Please read and acknowledge the company policy document. Once acknowledged, you will be able to take the exam."
+                      (click)="showTooltip($event)"> i </div>
+                    <div *ngIf="item?.policyType == 'For Information'" data-bs-toggle="tooltip" data-bs-placement="top"
+                      title="Please read and acknowledge the company policy document. No further action is required."
+                      (click)="showTooltip($event)"> For Information </div>
+                  </ng-container>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <!-- <div class="row mt-3 align-items-center">
+        <div class="row">
+          <div class="pagination">
+            <pagination-controls (pageChange)="paginate($event)"></pagination-controls>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

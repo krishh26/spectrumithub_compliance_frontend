@@ -1,0 +1,44 @@
+<main class="content bg-white">
+  <div class="container-fluid p-0">
+    <div class="page-title  mb-3">
+      <h2><a routerLink="/compliance-test/outstanding" class="me-2 text-dark"><i
+            class="bi bi-arrow-left-circle"></i></a>Instructions
+      </h2>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6">
+            Duration : {{settingDetails?.timeLimit}} Mins
+          </div>
+          <div class="col-6 text-end">
+            Maximum Marks: {{ settingDetails?.maximumMarks }}
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <h4><strong>Read the following instructions carefully.</strong></h4>
+        <ol class="ps-3 mb-5">
+          <li class="mb-2 p-16">The test contains {{ settingDetails?.maximumQuestions }} total questions.</li>
+          <li class="mb-2 p-16">Each question has 4 options out of which only one is correct.</li>
+          <li class="mb-2 p-16">You have to finish the test in {{settingDetails?.timeLimit}} minutes.</li>
+          <li class="mb-2 p-16">Try not to guess the answer as there is negative marketing.</li>
+          <li>You will be awarded {{settingDetails?.maximumScore}} mark for each correct answer and 0.5 will be deducted for each wrong answers.</li>
+          <li class="mb-2 p-16">There is no negative marketing for the questions that you have not attempted.</li>
+          <li class="mb-2 p-16">There are two types of questions: multiple-choice (MCQ) and true/false</li>
+        </ol>
+        <p>Declaration</p>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="acceptinstructions" [(ngModel)]="selectInstructions">
+          <label class="form-check-label" for="acceptinstructions">
+            I have read all the instructions carefully and have understood them.
+          </label>
+        </div>
+        <div class="form-group mt-3">
+          <a (click)="startTest()" class="btn btn-primary">Start Test</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

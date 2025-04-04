@@ -1,0 +1,215 @@
+<div class="container-fluid p-0">
+  <div class="page-title">
+    <h2>
+      <a routerLink="/admin/employee-list" class="me-2 text-dark"><i class="bi bi-arrow-left-circle"></i></a>
+      {{ employeeData?.role }}
+    </h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col-lg-2 col-xl-2 col-md-2 col-12">
+          <div class="profile-image">
+            <ng-container *ngIf="employeeData?.profileImg">
+              <img [src]="baseImageURL + employeeData?.profileImg" class="img-fluid" />
+            </ng-container>
+            <ng-container *ngIf="!employeeData?.profileImg">
+              <img src="assets/img/avatars/no-profile.jpg" class="img-fluid" />
+            </ng-container>
+            <!-- <div class="input--file">
+              <i class="bi bi-camera-fill"></i>
+              <input name="Select File" type="file" />
+            </div> -->
+          </div>
+        </div>
+        <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10 col-12">
+          <ul class="Employeedetails">
+            <!-- First 7 details always visible -->
+            <li>
+              <p>First Name</p>
+              <p class="mb-0 text-muted">{{ employeeData?.firstName || '-' }}</p>
+            </li>
+            <li>
+              <p>Middle Name</p>
+              <p class="mb-0 text-muted">{{ employeeData?.middleName || '-' }}</p>
+            </li>
+            <li>
+              <p>Last Name</p>
+              <p class="mb-0 text-muted">{{ employeeData?.lastName || '-' }}</p>
+            </li>
+            <li>
+              <p>Gender</p>
+              <p class="mb-0 text-muted">{{ employeeData?.gender || '-' }}</p>
+            </li>
+            <li>
+              <p>Date of Birth</p>
+              <p class="mb-0 text-muted">
+                {{ employeeData?.birthDate ? (employeeData?.birthDate | gmtDate) : '-' }}
+              </p>
+            </li>
+            <li>
+              <p>Email</p>
+              <p class="mb-0 text-muted">{{ employeeData?.email || '-' }}</p>
+            </li>
+            <li>
+              <p>Phone</p>
+              <p class="mb-0 text-muted">{{ employeeData?.phone || '-' }}</p>
+            </li>
+
+            <!-- Additional details (hidden initially) -->
+            <ng-container *ngIf="showAllDetails">
+              <li>
+                <p>Date of Joining</p>
+                <p class="mb-0 text-muted">
+                  {{ employeeData?.dateOfJoining ? (employeeData?.dateOfJoining | gmtDate) : '-' }}
+                </p>
+              </li>
+              <li>
+                <p>Alternate Phone</p>
+                <p class="mb-0 text-muted">
+                  {{ employeeData?.alternatePhone || '-' }}
+                </p>
+              </li>
+              <li>
+                <p>State</p>
+                <p class="mb-0 text-muted">{{ employeeData?.state || '-' }}</p>
+              </li>
+              <li>
+                <p>City</p>
+                <p class="mb-0 text-muted">{{ employeeData?.city || '-' }}</p>
+              </li>
+              <li>
+                <p>Country</p>
+                <p class="mb-0 text-muted">{{ employeeData?.country || '-' }}</p>
+              </li>
+            </ng-container>
+          </ul>
+
+          <!-- Flex container for buttons -->
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- Left-aligned Inactive Reason -->
+            <li class="list-unstyled" *ngIf="employeeData?.inactiveReason">
+              <p class="mb-0">Inactive Reason: <span class="text-danger">{{ employeeData?.inactiveReason }} ({{employeeData?.inactiveDate | gmtDate }})</span></p>
+            </li>
+
+            <!-- Right-aligned Buttons using ms-auto -->
+            <div class="d-flex gap-2 ms-auto">
+              <a [routerLink]="['/admin/edit-employee', employeeId]" class="btn btn-sm btn-secondary">
+                <i class="bi bi-pencil-square"></i>
+              </a>
+              <a href="javascript:;" class="btn btn-sm btn-primary" (click)="toggleDetails()">
+                <i class="bi" [ngClass]="showAllDetails ? 'bi-eye-slash' : 'bi-eye'"></i>
+              </a>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col-lg-8 col-xl-8 col-md-8 col-sm-8 col-6">
+          <ul class="OutstandingTab mb-3">
+            <li>
+              <a class="first-child active">
+                <img src="assets/img/icons/outstanding-icon.png" />
+                Outstanding
+              </a>
+            </li>
+            <li>
+              <a (click)="gotoCompletedPage()" class="second-child">
+                <img src="assets/img/icons/completed-icon.png" /> Completed
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group mob-mb1">
+            <span class="input-icon-left" style="top: 25px">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-search align-middle">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input type="text" class="form-control form-control-search"
+              placeholder="Search by Test name..." [formControl]="searchText"
+              style="padding: 1.5rem 1rem 1.5rem 2.5rem" />
+          </div>
+        </div>
+      </div>
+
+      <!-- New row for search input -->
+      <div class="row">
+        <div class="col-12 d-flex justify-content-end"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Test Name</th>
+            <th scope="col">Version</th>
+            <th scope="col">Due Date</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td *ngIf="!outstandingtestlist?.length" colspan="4">
+              <app-no-record-found></app-no-record-found>
+            </td>
+          </tr>
+          <tr *ngFor="
+              let item of outstandingtestlist
+                | paginate
+                  : {
+                      itemsPerPage: pagesize,
+                      currentPage: page,
+                      totalItems: totalRecords
+                    };
+              let i = index
+            ">
+            <td>{{ item?.name }}</td>
+            <td>{{ item?.subPoliciyDetail?.[0]?.version }}</td>
+            <td>
+              {{ (item?.subPoliciyDetail?.[0]?.policyDueDate?.length > 0 ? item?.subPoliciyDetail?.[0]?.policyDueDate?.[0]?.dueDate : item?.subPoliciyDetail?.[0]?.policySettingDetail?.examTimeLimit) | gmtDate }}
+            </td>
+            <td>
+              <!-- <a class="btn btn-primary btn-sm">Edit</a> -->
+              <div class="input-group">
+                <input type="date" #dateInput class="form-control"
+                  [(ngModel)]="item.subPoliciyDetail[0].policySettingDetail.examTimeLimit" (change)="
+                    onDateChange(
+                      item?.subPoliciyDetail?.[0]?.policySettingDetail?.examTimeLimit,
+                      item?.subPoliciyDetail?.[0]?._id
+                    )
+                  " hidden />
+                <a class="edit-btn" (click)="openDatePicker(dateInput)">📅 Edit</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <div class="row mt-3 align-items-center">
+      <div class="row">
+        <div class="pagination">
+          <pagination-controls (pageChange)="paginate($event)"></pagination-controls>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

@@ -1,2 +1,2 @@
-# spectrumithub_compliance_frontend
-spectrumithub_compliance_frontend : Angular
+# compliance_admin_frontend
+compliance_admin_frontend

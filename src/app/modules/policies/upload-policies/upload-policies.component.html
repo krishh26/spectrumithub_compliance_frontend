@@ -1,0 +1,86 @@
+<div class="container-fluid p-0">
+  <div class="page-title mb-3">
+    <h2><a routerLink="/policies/policies-list" class="me-2 text-dark"><i
+          class="bi bi-arrow-left-circle"></i></a>Upload Policy</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="policyForm" (ngSubmit)="submitForm()">
+        <div class="row align-items-center">
+          <div class="col-lg-2 col-xl-2 col-12">
+            <label class="col-form-label">Policy Name:</label>
+          </div>
+          <div class="col-lg-10 col-xl-10 col-12">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Please enter policy name" formControlName="name"
+                required="">
+              <small class="text-danger" *ngIf="submitted && f['name'].errors?.['required']">
+                Policy name is required
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="row g-3 align-items-center">
+          <div class="col-lg-2 col-xl-2 col-12">
+            <label class="col-form-label">Version:</label>
+          </div>
+          <div class="col-lg-10 col-xl-10 col-12">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="2.20" formControlName="version"
+              required="">
+            <small class="text-danger" *ngIf="submitted && f['version'].errors?.['required']">
+              Policy version is required
+            </small>
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="row g-3 align-items-center">
+          <div class="col-lg-2 col-xl-2 col-12">
+            <label class="col-form-label">Description :</label>
+          </div>
+          <div class="col-lg-10 col-xl-10 col-12">
+            <div class="form-group">
+              <textarea class="form-control" rows="2" cols="100" placeholder="Enter Description"  formControlName="description"></textarea>
+              <small class="text-danger" *ngIf="submitted && f['description'].errors?.['required']">
+                Policy description is required
+              </small>
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="row g-3 align-items-center">
+          <div class="col-lg-2 col-xl-2 col-12">
+            <label class="col-form-label">User Group :</label>
+          </div>
+          <div class="col-lg-10 col-xl-10 col-12">
+            <div class="form-group">
+              <select class="form-select" formControlName="userGroup">
+                <option value="" selected hidden readonly>select User Group</option>
+                <option value="LINE_MANAGER">Line Manger</option>
+                <option value="EMPLOYEE">Employee</option>
+              </select>
+            </div>
+          </div>
+        </div> -->
+        <div class="row g-3 align-items-center">
+          <div class="col-lg-2 col-xl-2 col-12">
+            <label class="col-form-label">Policy Type :</label>
+          </div>
+          <div class="col-lg-10 col-xl-10 col-12">
+            <div class="form-group">
+              <select class="form-select" formControlName="policyType">
+                <option value="" selected hidden readonly>Select policy type</option>
+                <option value="For Information">For Information</option>
+                <option value="For Action">For Action</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <button type="submit" class="btn btn-primary mob-w100">Upload Policy</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

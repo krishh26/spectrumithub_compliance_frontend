@@ -1,0 +1,74 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="container-fluid p-0">
+  <div class="row align-items-center mb-3">
+    <div class="col-lg-10 col-xl-10 col-12">
+      <div class="page-title">
+        <h2>
+          Policies Name
+        </h2>
+      </div>
+    </div>
+    <div class="col-lg-2 col-xl-2 col-12">
+      <a routerLink="/policies/upload-policy" class="btn btn-primary w-100"> Upload</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Policies Name</th>
+              <th scope="col">Last Updated Date</th>
+              <th scope="col">Policy Type</th>
+              <th scope="col">Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td *ngIf="!policyList?.length" colspan="6">
+                <app-no-record-found></app-no-record-found>
+              </td>
+            </tr>
+            <ng-container *ngFor="let item of policyList   | paginate : { itemsPerPage: pagesize, currentPage: page, totalItems: totalRecords };let i = index">
+              <tr>
+                <td>
+                  <a [routerLink]="['/sub-policies/sub-policies-list', item._id]">{{ item?.name }}</a>
+                </td>
+                <td>
+                  {{ item?.subPolicyDetail?.[0]?.length > 0 ? (item?.subPolicyDetail?.[0]?.[0].updatedAt |
+                  gmtDate) : (item?.createdAt |
+                  gmtDate) }}
+                </td>
+                <td>
+                  <a class="btn btn-primary btn-sm">{{ item?.policyType }}</a>
+                </td>
+                <td>{{ item?.status }}</td>
+                <td>
+                  <a style="margin-left: 2px;" [routerLink]="['/policies/upload-policy', item._id]" class="edit-btn me-2">
+                    <i class="bi bi-pencil-square"></i>
+                  </a>
+                  <a style="margin-left: 2px;" (click)="deletePolicy(item._id)" class="trash-btn">
+                    <i class="bi bi-trash-fill"></i>
+                  </a>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <!-- <div class="row mt-3 align-items-center">
+        <div class="row">
+          <div class="pagination">
+            <pagination-controls (pageChange)="paginate($event)"></pagination-controls>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>

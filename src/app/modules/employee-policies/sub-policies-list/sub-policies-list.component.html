@@ -1,0 +1,112 @@
+<div class="wrapper">
+  <div class="main">
+    <main class="content bg-white">
+      <div class="container-fluid p-0">
+        <div class="row align-items-center mb-3">
+          <div class="col-lg-10 col-xl-10 col-12">
+            <div class="page-title">
+              <h2>
+                <a routerLink="/employee-policies/employee-policies-list" class="me-2 text-dark">
+                  <i class="bi bi-arrow-left-circle"></i></a>
+                {{policyDetails?.name || "Sub Policies Name"}}
+              </h2>
+            </div>
+          </div>
+          <!-- <div class="col-lg-2 col-xl-2 col-12 d-flex gap-2">
+            <a [routerLink]="['/employee-policies/employee-policies-list']" class="btn btn-primary w-100">
+              Back
+            </a>
+          </div> -->
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">Version History</th>
+                    <th scope="col">Published Date</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Date Stamp</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td *ngIf="!policyList?.length" colspan="6">
+                      <app-no-record-found></app-no-record-found>
+                    </td>
+                  </tr>
+
+                  <ng-container *ngFor="let item of policyList | paginate
+                  : {
+                      itemsPerPage: pagesize,
+                      currentPage: page,
+                      totalItems: totalRecords
+                    };
+              let i = index">
+                    <tr>
+                      <td>
+                        <!-- <a [routerLink]="['/employee-policies/terms-condition-employee/', item._id]" class="text-primary
+                        ">{{ item?.name }} ({{ item?.version }})</a> -->
+                        <ng-container
+                          *ngIf="dueDateCheck(item?.policyDueDate?.length > 0 ? item?.policyDueDate?.[0]?.dueDate : item?.policySettings?.examTimeLimit)">
+                          <a data-bs-toggle="tooltip" data-bs-placement="top" title="Due date has passed"
+                            (click)="showTooltip($event)">{{ item?.version }}</a>
+                        </ng-container>
+                        <ng-container
+                          *ngIf="!dueDateCheck(item?.policyDueDate?.length > 0 ? item?.policyDueDate?.[0]?.dueDate : item?.policySettings?.examTimeLimit)">
+                          <a [routerLink]="['/employee-policies/terms-condition-employee/', item._id]"
+                            class="text-primary">{{ item?.version }}</a>
+                        </ng-container>
+                      </td>
+                      <td>{{ item?.policySettings?.publishDate | gmtDate }}</td>
+                      <td>{{ (item?.policyDueDate?.length > 0 ? item?.policyDueDate?.[0]?.dueDate :
+                        item?.policySettings?.examTimeLimit) | gmtDate }}</td>
+                      <td>
+                        <span *ngIf="item?.conditionDetail?.length">
+                          {{ item?.conditionDetail?.[0]?.updatedAt | gmtDate }}
+                        </span>
+
+                      </td>
+                      <td>
+
+                        <div *ngIf="i === 0; else notApplicable">
+                          <div
+                            *ngIf="dueDateCheck(item?.policyDueDate?.length > 0 ? item?.policyDueDate?.[0]?.dueDate : item?.policySettings?.examTimeLimit)"
+                            class="m-1">
+                            <a class="btn btn-danger btn-sm">Due date has passed</a>
+                            <!-- <p style="color: green;"><strong>✅ Policy is Applicable</strong></p> -->
+                          </div>
+                          <span *ngIf="!item?.conditionDetail?.length">
+                            <a class="btn btn-danger btn-sm">Accept Pending</a>
+                          </span>
+                          <!-- <p style="color: green;"><strong>✅ Policy is Applicable</strong></p> -->
+                        </div>
+                        <ng-template #notApplicable>
+                          <!-- <a class="btn btn-danger btn-sm">❌ Not Applicable</a> -->
+                          <p style="color: red;">❌ Not Applicable</p>
+                        </ng-template>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+            <!-- <div class="row mt-3 align-items-center">
+              <div class="row">
+                <div class="pagination">
+                  <pagination-controls (pageChange)="paginate($event)"></pagination-controls>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

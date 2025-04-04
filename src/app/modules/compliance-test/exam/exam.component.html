@@ -1,0 +1,77 @@
+<main class="content bg-white">
+  <div class="container-fluid p-0">
+    <div class="page-title  mb-3">
+      <div class="row align-items-center">
+        <div class="col-6">
+          <!-- <h2><a routerLink="/compliance-test/outstanding" (click)="resetLocal()" class="me-2 text-dark"><i class="bi bi-arrow-left-circle"></i></a></h2> -->
+        </div>
+        <div class="col-6 text-end">
+          <span class="badge bg-success ps-3 pe-3 pt-2 pb-2" *ngIf="questions.length > 0">{{ formattedTime }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header text-center bg-light">
+        <h2 class="mb-0 p-600">Data Analysis Exam</h2>
+      </div>
+      <div class="card-body" *ngIf="questions.length > 0">
+        <div class="row align-items-center mb-3">
+          <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
+            <p class="mb-0"><strong>Read Questions Carefully.</strong></p>
+          </div>
+          <div class="col-md-6 col-sm-12 text-md-end">
+            <button *ngIf="currentQuestionIndex === questions.length - 1"
+                    class="btn btn-success complete-btn"
+                    (click)="completeExam()">
+              Complete
+            </button>
+          </div>
+        </div>
+
+        <div class="exam-question">
+          <h3 class="mb-4 question-text">{{ currentQuestionIndex + 1 }}. {{ currentQuestion?.questionText }}</h3>
+
+          <div class="options-container">
+            <div *ngFor="let option of currentQuestion?.optionsDetails; let i = index">
+              <div class="form-check option-container"
+                   (click)="selectAnswer(option.optionIndex)"
+                   [class.selected]="isOptionSelected(option.optionIndex)">
+                <input class="form-check-input" [type]="currentQuestion?.questionType == 1 ? 'checkbox' : 'radio'"
+                  [name]="'question_' + currentQuestion?._id" [value]="option.optionIndex"
+                  [checked]="isOptionSelected(option.optionIndex)" />
+                <label class="form-check-label">
+                  {{ option.optionText }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group text-center text-md-end mt-4">
+          <button class="btn btn-dark m-1" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">
+            <i class="bi bi-chevron-left"></i> Previous
+          </button>
+          <button class="btn btn-primary m-1" (click)="nextQuestion()"
+            [disabled]="currentQuestionIndex === questions.length - 1">
+            Next <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+
+        <div class="p-3 p-md-5">
+          <div class="progress mb-2">
+            <div class="progress-bar" role="progressbar" [style.width]="progressPercent + '%'" aria-valuemin="0"
+              aria-valuemax="100"></div>
+          </div>
+          <p class="text-center">{{ currentQuestionIndex + 1 }}/{{ questions.length }} Completed</p>
+        </div>
+      </div>
+      <div class="card-body" *ngIf="questions.length == 0">
+        <app-no-record-found></app-no-record-found>
+      </div>
+    </div>
+  </div>
+</main>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

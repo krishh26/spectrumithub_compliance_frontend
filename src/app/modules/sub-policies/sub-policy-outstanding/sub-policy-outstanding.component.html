@@ -1,0 +1,61 @@
+<div class="container-fluid p-0">
+  <div class="page-title  mb-3">
+    <h2><a [routerLink]="[ '/sub-policies/sub-policies-list/', subPolicyDetails?.policyId]"
+        [queryParams]="{ version: subPolicyDetails?.version }" class="me-2 text-dark"><i
+          class="bi bi-arrow-left-circle"></i></a> Privacy
+      and Data Policy Outstanding (Version : {{subPolicyDetails?.version}})</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <ul class="linemanager-emplyee-btn mb-4">
+        <li class="ml-1">
+          <a (click)="changeType('LINE_MANAGER')" [ngClass]="dataType == 'LINE_MANAGER' ? 'active': ''">
+            Line Manager
+          </a>
+        </li>
+        <li class="ml-1">
+          <a (click)="changeType('EMPLOYEE')" [ngClass]="dataType == 'EMPLOYEE' ? 'active': ''">
+            Employee
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Version</th>
+              <th scope="col">Due Date</th>
+              <th scope="col"> </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td *ngIf="!outStandingList?.length" colspan="4">
+                <app-no-record-found></app-no-record-found>
+              </td>
+            </tr>
+
+            <ng-container *ngFor="let item of outStandingList">
+              <tr>
+                <td>{{ item?.firstName }} {{ item?.lastName }}</td>
+                <td>Version {{ subPolicyDetails?.version }}</td>
+                <td>{{ settingDetails?.examTimeLimit | gmtDate }}</td>
+                <td>
+                  <div class="input-group">
+                    <input type="date" #dateInput class="form-control" [(ngModel)]="item.examTimeLimit"
+                      (change)="onDateChange(item.examTimeLimit, item?._id)" hidden />
+                    <button class="btn btn-primary" (click)="openDatePicker(dateInput)">📅 Edit</button>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

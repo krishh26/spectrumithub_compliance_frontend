@@ -1,0 +1,86 @@
+<div class="container-fluid p-0">
+  <div class="row align-items-center mb-3">
+    <div class="col-lg-10 col-xl-10 col-12">
+      <div class="page-title">
+        <h2>
+          <!-- <a href="employee-list.html" class="me-2 text-dark">
+            <i class="bi bi-arrow-left-circle"></i></a> --> Policies Name
+        </h2>
+      </div>
+      <div class="col-lg-6 col-xl-6 col-md-8 col-sm-8 col-12 mob-mb1">
+        <div class="form-group mb-0 position-relative">
+          <input type="text" class="form-control form-control-search search-input" [formControl]="searchText"
+            placeholder="Search by Policies name..." />
+          <span class="search-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-search">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Policies Name</th>
+              <th scope="col">Latest Version</th>
+              <th scope="col">Last Updated Date</th>
+              <th scope="col">Policy Type</th>
+              <!-- <th scope="col">Date Stamp</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td *ngIf="!policyList?.length" colspan="6">
+                <app-no-record-found></app-no-record-found>
+              </td>
+            </tr>
+            <ng-container *ngFor="let item of policyList | paginate : {
+                itemsPerPage: pagesize,
+                currentPage: page,
+                totalItems: totalRecords
+              }; let i = index">
+              <tr>
+                <td>
+                  <a [routerLink]="[ '/employee-policies/employee-sub-policies-list', item._id ]">{{ item?.name
+                    }}</a>
+                </td>
+                <td> {{ item?.subPolicyDetail?.[0]?.length > 0 ? item?.subPolicyDetail?.[0]?.[0].version : "" }}</td>
+                <td> {{ item?.subPolicyDetail?.[0]?.length > 0 ? (item?.subPolicyDetail?.[0]?.[0].updatedAt | gmtDate) :
+                  (item?.createdAt | gmtDate ) }}</td>
+                <td>
+                  <a class="btn btn-primary btn-sm" *ngIf="item?.policyType == 'For Information'"
+                    data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Please read and acknowledge the company policy document. No further action is required."
+                    (click)="showTooltip($event)">{{ item?.policyType }}</a>
+                  <a class="btn btn-primary btn-sm" *ngIf="item?.policyType !== 'For Information'"
+                    data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Please read and acknowledge the company policy document. Once acknowledged, you will be able to take the exam."
+                    (click)="showTooltip($event)">{{ item?.policyType }}</a>
+                </td>
+                <!-- <td scope="col">{{ item?.createdAt | gmtDate }}</td> -->
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <!-- <div class="row mt-3 align-items-center">
+        <div class="row">
+          <div class="pagination">
+            <pagination-controls (pageChange)="paginate($event)"></pagination-controls>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

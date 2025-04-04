@@ -1,0 +1,131 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="container-fluid p-0">
+  <div class="row align-items-center mb-3">
+    <div class="col-lg-10 col-xl-10 col-12">
+      <div class="page-title">
+        <h2>
+          <a routerLink="/policies/policies-list" class="me-2 text-dark">
+            <i class="bi bi-arrow-left-circle"></i></a>
+          {{policyDetails?.name || 'Sub Policies'}}
+        </h2>
+      </div>
+    </div>
+    <div class="col-lg-2 col-xl-2 col-12 d-flex gap-2">
+      <a [routerLink]="['/sub-policies/upload-sub-policy', policyId]" class="btn btn-primary w-100">
+        Upload
+      </a>
+    </div>
+  </div>
+  <div class="mb-1">
+    <ul class="OutstandingTab" *ngIf="latestPolicy">
+      <li>
+        <a class="first-child">
+          <img src="assets/img/icons/outstanding-icon.png" /> Version
+          <select [(ngModel)]="selectedVersion" (change)="onVersionChange($event)">
+            <option *ngFor="let item of policyList" [value]="item?.version">
+              {{ item?.version }}
+            </option>
+          </select>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="[ '/sub-policies/completed/', latestPolicy?._id]" class="second-child">
+          <img src="assets/img/icons/completed-icon.png" /> Completed ({{ countDetails?.completedCount }})
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="[ '/sub-policies/outstanding/', latestPolicy?._id]" class="first-child">
+          <img src="assets/img/icons/outstanding-icon.png" /> Outstanding ({{ countDetails?.OutStadingCount }})
+        </a>
+      </li>
+    </ul>
+    <ul class="OutstandingTab" *ngIf="!latestPolicy">
+      <li>
+        <a class="first-child">
+          <img src="assets/img/icons/outstanding-icon.png" /> Version
+        </a>
+      </li>
+      <li>
+        <a class="second-child">
+          <img src="assets/img/icons/completed-icon.png" /> Completed </a>
+      </li>
+      <li>
+        <a class="first-child">
+          <img src="assets/img/icons/outstanding-icon.png" /> Outstanding
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Version History</th>
+              <th scope="col">Published Date</th>
+              <th scope="col">Created Date</th>
+              <th scope="col">Action</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td *ngIf="!policyList?.length" colspan="6">
+                <app-no-record-found></app-no-record-found>
+              </td>
+            </tr>
+
+            <ng-container
+              *ngFor="let item of policyList | paginate: {itemsPerPage: pagesize, currentPage: page, totalItems: totalRecords};let i = index">
+              <tr>
+                <td>
+                  <a [routerLink]="['/sub-policies/terms-condition-admin/', item._id]">{{ item?.version }}</a>
+                </td>
+                <td>{{ item?.policySettings?.publishDate | gmtDate }}</td>
+                <td>{{ item?.createdAt | gmtDate }}</td>
+                <td class="action-col">
+                  <span *ngIf="policyDetails?.policyType !== 'For Information'">
+                    <a [routerLink]="[ '/sub-policies/setting-sub-policies/', item._id]" class="text-dark me-2"><i
+                      class="bi bi-gear-fill"></i> </a>
+                  </span>
+                  <span *ngIf="policyDetails?.policyType == 'For Information'">
+                    <a [routerLink]="[ '/sub-policies/setting-sub-policies-for-information/', item._id]" class="text-dark me-2"><i
+                      class="bi bi-gear-fill"></i> </a>
+                  </span>
+                  <!-- <a style="margin-left: 2px;" (click)="uploadSubPolicies(item?._id)" class="edit-btn me-2">
+                    <i class="bi bi-pencil-square"></i>
+                  </a> -->
+                  <a (click)="deleteSubPolicy(item._id)" class="trash-btn">
+                    <i class="bi bi-trash-fill"></i>
+                  </a>
+                </td>
+                <td>
+                  <ng-container *ngIf="item?.policySettings && policyDetails?.policyType !== 'For Information'">
+                    <a class="btn btn-primary btn-sm me-2 mob-mb1" [routerLink]="['/sub-policies/question-list']"
+                      [queryParams]="{ subPoliciesId: item._id, userGroup: '1' }">Employee</a>
+                    <a class="btn btn-primary btn-sm me-2 mob-mb1" [routerLink]="['/sub-policies/question-list']"
+                      [queryParams]="{ subPoliciesId: item._id, userGroup: '2'}">Line Manager</a>
+                  </ng-container>
+                  <ng-container *ngIf="!item?.policySettings">
+                    <a class="btn btn-danger btn-sm">Setting Pending</a>
+                  </ng-container>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <!-- <div class="row mt-3 align-items-center">
+        <div class="row">
+          <div class="pagination">
+            <pagination-controls (pageChange)="paginate($event)"></pagination-controls>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>

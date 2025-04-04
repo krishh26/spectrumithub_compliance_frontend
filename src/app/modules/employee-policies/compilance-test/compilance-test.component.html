@@ -1,0 +1,96 @@
+<div class="wrapper">
+  <div class="main">
+    <main class="content bg-white">
+      <div class="container-fluid p-0">
+        <div class="row align-items-center mb-3">
+          <div class="col-lg-10 col-xl-10 col-12">
+            <div class="page-title">
+              <h2>
+                <!-- <a href="employee-list.html" class="me-2 text-dark">
+                    <i class="bi bi-arrow-left-circle"></i></a> -->
+                Compilance Test
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col-lg-8 col-xl-8 col-md-6 col-sm-6 col-12 mob-mb1">
+                <ul class="OutstandingTab mb-4">
+                  <li>
+                    <a routerLink="/admin/employee-details-outstanding" class="first-child active">
+                      <img src="assets/img/icons/outstanding-icon.png" />
+                      Outstanding
+                    </a>
+                  </li>
+                  <li>
+                    <a routerLink="/admin/employee-details-completed" class="second-child">
+                      <img src="assets/img/icons/completed-icon.png" />
+                      Completed
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">Policies Name</th>
+                      <th scope="col">Last Updated Date</th>
+                      <th scope="col">Policy Type</th>
+                      <th scope="col">Statuts</th>
+                      <th scope="col">View</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td *ngIf="!policyList?.length" colspan="6">
+                        <app-no-record-found></app-no-record-found>
+                      </td>
+                    </tr>
+
+                    <ng-container *ngFor="let item of policyList">
+                      <tr>
+                        <td>
+                          <a [routerLink]="[
+                              '/employee-policies/employee-sub-policies-list',
+                              item._id
+                            ]">{{ item?.name }}</a>
+                        </td>
+                        <td>{{ item?.updatedAt | gmtDate }}</td>
+                        <td>
+                          <a class="btn btn-primary btn-sm">{{
+                            item?.policyType
+                            }}</a>
+                        </td>
+                        <td>{{ item?.status }}</td>
+                        <td>
+                          <a routerLink="/policies/terms-conditions" class="text-dark"><i
+                              class="bi bi-eye-fill"></i></a>
+                        </td>
+                        <td (click)="deletePolicy(item._id)" style="cursor: pointer">
+                          <i class="bi bi-trash3-fill"></i>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

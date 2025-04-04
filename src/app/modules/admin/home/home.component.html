@@ -1,0 +1,132 @@
+<div class="wrapper">
+  <nav id="sidebar" class="sidebar js-sidebar">
+    <div class="sidebar-content js-simplebar">
+      <a class="sidebar-brand">
+        <span class="align-middle">
+          <ng-container *ngIf="loginRole !== 'ADMIN'">
+            <span routerLink="/employee-policies/employee-policies-list">
+              Compliance Portal
+            </span>
+          </ng-container>
+          <ng-container *ngIf="loginRole === 'ADMIN'">
+            <span routerLink="/admin/employee-list">
+              Admin Portal
+            </span>
+          </ng-container>
+        </span>
+      </a>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-item" [ngClass]="{ 'active': currentRoute.startsWith('/admin') }"
+          *ngIf="loginRole === 'ADMIN'">
+          <a class="sidebar-link" routerLink="/admin/employee-list">
+            <i class="bi bi-people"></i><span class="align-middle">Employee</span>
+          </a>
+        </li>
+        <li class="sidebar-item" *ngIf="loginRole === 'ADMIN'"
+          [ngClass]="{ 'active': currentRoute.startsWith('/policies') || currentRoute.startsWith('/sub-policies') }">
+          <a class="sidebar-link" routerLink="/policies/policies-list">
+            <i class="bi bi-file-text"></i>
+            <span class="align-middle">Policies</span>
+          </a>
+        </li>
+        <li class="sidebar-item" *ngIf="loginRole !== 'ADMIN'"
+          [ngClass]="{ 'active': currentRoute.startsWith('/compliance-test') }">
+          <a class="sidebar-link" routerLink="/compliance-test/outstanding">
+            <i class="bi bi-file-text"></i>
+            <span class="align-middle">Compliance Test</span>
+          </a>
+        </li>
+        <li class="sidebar-item" *ngIf="loginRole !== 'ADMIN'"
+          [ngClass]="{ 'active': currentRoute.startsWith('/employee-policies') }">
+          <a class="sidebar-link" routerLink="/employee-policies/employee-policies-list">
+            <i class="bi bi-file-text"></i>
+            <span class="align-middle">Policies</span>
+          </a>
+        </li>
+        <li class="sidebar-item" *ngIf="loginRole !== 'ADMIN'"
+          [ngClass]="{ 'active': currentRoute.startsWith('/support') }">
+          <a class="sidebar-link" routerLink="/support/support">
+            <i class="bi bi-file-text"></i>
+            <span class="align-middle">Support</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="main">
+    <!-- <nav class="navbar navbar-expand navbar-light navbar-bg">
+      <a class="sidebar-toggle js-sidebar-toggle" (click)="toggleSidebar()">
+        <i class="hamburger align-self-center"></i>
+      </a>
+      <div class="d-inline-block ms-2">
+        <h4 class="mb-0"><strong>Welcome, {{ loginUser?.firstName }} {{ loginUser?.lastName }}</strong></h4>
+      </div>
+
+      <div class="navbar-collapse collapse">
+        <ul class="navbar-nav navbar-align align-items-center">
+          <li class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="javascript:;" id="adminDropdown"
+              ngbDropdownToggle>
+              <img src="assets/img/avatars/no-profile.jpg" class="avatar img-fluid full-rounded me-2 d-inline-block"
+                alt="Charles Hall" />
+              <div class="text-dark d-inline-block"><strong>{{ loginUser?.firstName }} {{ loginUser?.lastName
+                  }}</strong></div>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu aria-labelledby="adminDropdown">
+              <li>
+                <a class="dropdown-item" routerLink="/admin/employee-profile">
+                  <i class="align-middle me-1" data-feather="user"></i> My Profile
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/admin/change-password">
+                  <i class="align-middle me-1" data-feather="key"></i> Change
+                  Password
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" (click)="logout()">
+                  <i class="align-middle me-1" data-feather="power"></i> Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav> -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-bg">
+      <a class="sidebar-toggle js-sidebar-toggle" (click)="toggleSidebar()">
+        <i class="hamburger align-self-center"></i>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav ms-auto navbar-align align-items-center">
+          <li class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle" href="javascript:;" id="adminDropdown" ngbDropdownToggle>
+              <img src="assets/img/avatars/no-profile.jpg" class="avatar img-fluid rounded-circle me-2" alt="User" />
+              <span class="text-dark"><strong>{{ loginUser?.firstName }} {{ loginUser?.lastName }}</strong></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu aria-labelledby="adminDropdown">
+              <li><a class="dropdown-item" routerLink="/admin/employee-profile"><i class="align-middle me-1"
+                    data-feather="user"></i> My Profile</a></li>
+              <li><a class="dropdown-item" routerLink="/admin/change-password"><i class="align-middle me-1"
+                    data-feather="key"></i> Change Password</a></li>
+              <li><a class="dropdown-item" (click)="logout()"><i class="align-middle me-1" data-feather="power"></i>
+                  Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="content bg-white">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

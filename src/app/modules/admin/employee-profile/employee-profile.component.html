@@ -1,0 +1,188 @@
+<!--New code start-->
+<div class="container-fluid">
+  <div class="d-flex align-items-center mb-4">
+    <a *ngIf="loginUser?.role !== 'ADMIN'" routerLink="/employee-policies/employee-policies-list"
+      class="me-3 text-dark p-24">
+      <i class="bi bi-arrow-left-circle"></i>
+    </a>
+    <h2 class="mb-0">User Profile</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row align-items-center mb-4">
+        <div class="col-lg-2 col-xl-2 col-md-2 col-12 mob-mb1">
+          <div class="profile-image">
+            <img [src]="loginUser?.profileImg ? baseUrl + loginUser.profileImg : 'assets/img/avatars/no-profile.jpg'" class="img-fluid">
+          </div>
+        </div>
+        <div class="col-lg-10 col-xl-10 col-md-10 col-sm-10 col-12 desktop-end">
+          <!-- <a href="javascript:void(0)" class="btn btn-dark">Edit Profile</a> -->
+        </div>
+      </div>
+      <!--start record-->
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>First Name</label>
+            <div class="text-box">{{ employeeData?.firstName }}</div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>Middle Name</label>
+            <div class="text-box">{{ employeeData?.middleName }}</div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>Last Name</label>
+            <div class="text-box">{{ employeeData?.lastName }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>Gender</label>
+            <div class="text-box">{{ employeeData?.gender }}</div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>Date of Birth</label>
+            <div class="text-box">{{ employeeData?.birthDate | gmtDate }}</div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>Email ID</label>
+            <div class="text-box">{{ employeeData?.email }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>Date of Joining</label>
+            <div class="text-box">{{ employeeData?.dateOfJoining | gmtDate }}</div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>Phone Number</label>
+            <div class="text-box">{{ employeeData?.phone }}</div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>Alternate Number</label>
+            <div class="text-box">{{ employeeData?.alternatePhone || '-' }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>Country</label>
+            <div class="text-box">{{ employeeData?.country }}</div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>State</label>
+            <div class="text-box">{{ employeeData?.state }}</div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>City</label>
+            <div class="text-box">{{ employeeData?.city }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+          <div class="form-group">
+            <label>Role</label>
+            <div class="text-box">{{ employeeData?.role }}</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!--/end new code-->
+
+  <!--kishan old code-->
+  <!-- <div class="container py-4 rounded shadow-sm">
+  <div class="d-flex align-items-center mb-4 border-bottom pb-2">
+    <a *ngIf="loginUser?.role == 'ADMIN'" routerLink="/admin/employee-list" class="me-3 text-dark fs-4">
+      <i class="bi bi-arrow-left-circle"></i>
+    </a>
+    <a *ngIf="loginUser?.role !== 'ADMIN'" routerLink="/employee-policies/employee-policies-list" class="me-3 text-dark fs-4">
+      <i class="bi bi-arrow-left-circle"></i>
+    </a>
+    <h2 class="mb-0">User Profile</h2>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="text-center mb-4">
+        <div class="profile-image rounded-circle overflow-hidden shadow-sm mx-auto"
+          style="width: 120px; height: 120px;">
+        <div class="profile-image rounded-circle overflow-hidden shadow-sm mx-auto"
+          style="width: 120px; height: 120px;">
+          <img src="assets/img/avatars/no-profile.jpg" class="img-fluid w-100 h-100" style="object-fit: cover;" />
+        </div>
+        <h5 class="fw-bold mt-2">{{ loginUser?.profileImage || 'Avatar-4.jpg' }}</h5>
+      </div>
+
+      <table class="table text-lg">
+        <tbody>
+          <tr>
+            <td><strong>First Name:</strong> {{ employeeData?.firstName }}</td>
+          </tr>
+          <tr>
+            <td><strong>Middle Name:</strong> {{ employeeData?.middleName }}</td>
+          </tr>
+          <tr>
+            <td><strong>Last Name:</strong> {{ employeeData?.lastName }}</td>
+          </tr>
+          <tr>
+            <td><strong>Gender:</strong> {{ employeeData?.gender }}</td>
+          </tr>
+          <tr>
+            <td><strong>Date of Birth:</strong> {{ employeeData?.birthDate | date: "ddd MMM YYYY" }}</td>
+          </tr>
+          <tr>
+            <td><strong>Email:</strong> {{ employeeData?.email }}</td>
+          </tr>
+          <tr>
+            <td><strong>Joining Date:</strong> {{ employeeData?.dateOfJoining | date: "ddd MMM YYYY"}}</td>
+          </tr>
+          <tr>
+            <td><strong>Phone:</strong> {{ employeeData?.phone }}</td>
+          </tr>
+          <tr>
+            <td><strong>Alternate Phone:</strong> {{ employeeData?.alternatePhone || '-' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Country:</strong> {{ employeeData?.country }}</td>
+          </tr>
+          <tr>
+            <td><strong>State:</strong> {{ employeeData?.state }}</td>
+          </tr>
+          <tr>
+            <td><strong>City:</strong> {{ employeeData?.city }}</td>
+          </tr>
+          <tr>
+            <td class="text-primary fw-bold"><strong>Role:</strong> {{ employeeData?.role }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> -->
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>

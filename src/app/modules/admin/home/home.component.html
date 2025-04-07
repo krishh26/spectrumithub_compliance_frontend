@@ -101,11 +101,11 @@
         <i class="hamburger align-self-center"></i>
       </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <button class="navbar-toggler" type="button" (click)="toggleNavbar()" [attr.aria-expanded]="!isNavbarCollapsed">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarContent">
+      <div class="collapse navbar-collapse" [ngClass]="{'show': !isNavbarCollapsed}" id="navbarContent">
         <ul class="navbar-nav ms-auto navbar-align align-items-center">
           <li class="nav-item dropdown" ngbDropdown>
             <a class="nav-link dropdown-toggle" href="javascript:;" id="adminDropdown" ngbDropdownToggle>

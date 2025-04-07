@@ -13,6 +13,7 @@ export class HomeComponent {
   loginUser: any;
   loginRole: any;
   isSidebarOpen = true; // Sidebar is open by default
+  isNavbarCollapsed = true; // Navbar is collapsed by default
   currentRoute: string = '';
 
   constructor(
@@ -25,7 +26,6 @@ export class HomeComponent {
     this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
       this.currentRoute = event.urlAfterRedirects;
-
     });
   }
 
@@ -33,7 +33,6 @@ export class HomeComponent {
     this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
       this.currentRoute = event.urlAfterRedirects;
-
     });
   }
 
@@ -53,4 +52,7 @@ export class HomeComponent {
     }
   }
 
+  toggleNavbar() {
+    this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
 }

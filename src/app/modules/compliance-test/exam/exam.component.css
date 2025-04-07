@@ -1,3 +1,7 @@
+.no-copy {
+  user-select: none !important;
+}
+
 .progress-bar {
   transition: width 0.3s ease-in-out;
 }

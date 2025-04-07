@@ -10,12 +10,9 @@
       <div class="row align-items-center">
         <div class="col-lg-2 col-xl-2 col-md-2 col-12">
           <div class="profile-image">
-            <ng-container *ngIf="employeeData?.profileImg">
-              <img [src]="baseImageURL + employeeData?.profileImg" class="img-fluid" />
-            </ng-container>
-            <ng-container *ngIf="!employeeData?.profileImg">
-              <img src="assets/img/avatars/no-profile.jpg" class="img-fluid" />
-            </ng-container>
+            <img
+              [src]="employeeData?.profileImg ? baseImageURL + employeeData?.profileImg : 'assets/img/avatars/no-profile.jpg'"
+              class="img-fluid" />
             <!-- <div class="input--file">
               <i class="bi bi-camera-fill"></i>
               <input name="Select File" type="file" />
@@ -89,7 +86,8 @@
           <div class="d-flex justify-content-between align-items-center">
             <!-- Left-aligned Inactive Reason -->
             <li class="list-unstyled" *ngIf="employeeData?.inactiveReason">
-              <p class="mb-0">Inactive Reason: <span class="text-danger">{{ employeeData?.inactiveReason }} ({{employeeData?.inactiveDate | gmtDate }})</span></p>
+              <p class="mb-0">Inactive Reason: <span class="text-danger">{{ employeeData?.inactiveReason }}
+                  ({{employeeData?.inactiveDate | gmtDate }})</span></p>
             </li>
 
             <!-- Right-aligned Buttons using ms-auto -->
@@ -112,22 +110,23 @@
   <div class="card">
     <div class="card-header">
       <div class="row align-items-center">
-        <div class="col-lg-8 col-xl-8 col-md-8 col-sm-8 col-6">
-          <ul class="OutstandingTab mb-3">
-            <li>
-              <a class="first-child active">
-                <img src="assets/img/icons/outstanding-icon.png" />
+        <div class="col-12 col-md-8">
+          <ul class="OutstandingTab d-flex mb-3 mb-md-0">
+            <li class="me-2">
+              <a class="first-child active d-flex align-items-center">
+                <img src="assets/img/icons/outstanding-icon.png" class="me-1" />
                 Outstanding
               </a>
             </li>
             <li>
-              <a (click)="gotoCompletedPage()" class="second-child">
-                <img src="assets/img/icons/completed-icon.png" /> Completed
+              <a (click)="gotoCompletedPage()" class="second-child d-flex align-items-center">
+                <img src="assets/img/icons/completed-icon.png" class="me-1" />
+                Completed
               </a>
             </li>
           </ul>
         </div>
-        <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4 col-12">
+        <div class="col-12 col-md-4">
           <div class="form-group mob-mb1">
             <span class="input-icon-left" style="top: 25px">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -137,16 +136,10 @@
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
             </span>
-            <input type="text" class="form-control form-control-search"
-              placeholder="Search by Test name..." [formControl]="searchText"
-              style="padding: 1.5rem 1rem 1.5rem 2.5rem" />
+            <input type="text" class="form-control form-control-search" placeholder="Search by Test name..."
+              [formControl]="searchText" style="padding: 1.5rem 1rem 1.5rem 2.5rem" />
           </div>
         </div>
-      </div>
-
-      <!-- New row for search input -->
-      <div class="row">
-        <div class="col-12 d-flex justify-content-end"></div>
       </div>
     </div>
   </div>
@@ -182,7 +175,9 @@
             <td>{{ item?.name }}</td>
             <td>{{ item?.subPoliciyDetail?.[0]?.version }}</td>
             <td>
-              {{ (item?.subPoliciyDetail?.[0]?.policyDueDate?.length > 0 ? item?.subPoliciyDetail?.[0]?.policyDueDate?.[0]?.dueDate : item?.subPoliciyDetail?.[0]?.policySettingDetail?.examTimeLimit) | gmtDate }}
+              {{ (item?.subPoliciyDetail?.[0]?.policyDueDate?.length > 0 ?
+              item?.subPoliciyDetail?.[0]?.policyDueDate?.[0]?.dueDate :
+              item?.subPoliciyDetail?.[0]?.policySettingDetail?.examTimeLimit) | gmtDate }}
             </td>
             <td>
               <!-- <a class="btn btn-primary btn-sm">Edit</a> -->

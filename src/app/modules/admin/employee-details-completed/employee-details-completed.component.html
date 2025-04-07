@@ -105,21 +105,21 @@
   <div class="card">
     <div class="card-header">
       <div class="row align-items-center">
-        <div class="col-lg-8 col-xl-8 col-md-8 col-sm-8 col-6">
-          <ul class="OutstandingTab mb-4">
-            <li>
-              <a (click)="gotoOutStandingPage()" class="first-child">
-                <img src="assets/img/icons/outstanding-icon.png" /> Outstanding
+        <div class="col-12 col-md-8">
+          <ul class="OutstandingTab d-flex mb-3 mb-md-0">
+            <li class="me-2">
+              <a (click)="gotoOutStandingPage()" class="first-child d-flex align-items-center">
+                <img src="assets/img/icons/outstanding-icon.png" class="me-1" /> Outstanding
               </a>
             </li>
             <li>
-              <a class="second-child active">
-                <img src="assets/img/icons/completed-icon.png" /> Completed
+              <a class="second-child active d-flex align-items-center">
+                <img src="assets/img/icons/completed-icon.png" class="me-1" /> Completed
               </a>
             </li>
           </ul>
         </div>
-        <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4 col-12">
+        <div class="col-12 col-md-4">
           <div class="form-group mob-mb1">
             <span class="input-icon-left" style="top: 25px">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -129,9 +129,8 @@
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
             </span>
-            <input type="text" class="form-control form-control-search"
-              placeholder="Search by Test name..." [formControl]="searchText"
-              style="padding: 1.5rem 1rem 1.5rem 2.5rem" />
+            <input type="text" class="form-control form-control-search" placeholder="Search by Test name..."
+              [formControl]="searchText" style="padding: 1.5rem 1rem 1.5rem 2.5rem" />
           </div>
         </div>
       </div>

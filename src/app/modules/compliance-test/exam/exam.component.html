@@ -1,5 +1,5 @@
-<main class="content bg-white">
-  <div class="container-fluid p-0">
+<main class="content bg-white no-copy">
+  <div *ngIf="!hasReloaded" class="container-fluid p-0">
     <div class="page-title  mb-3">
       <div class="row align-items-center">
         <div class="col-6">
@@ -23,7 +23,7 @@
           <div class="col-md-6 col-sm-12 text-md-end">
             <button *ngIf="currentQuestionIndex === questions.length - 1"
                     class="btn btn-success complete-btn"
-                    (click)="completeExam()">
+                    (click)="completeExam(true)">
               Complete
             </button>
           </div>
@@ -71,6 +71,7 @@
       </div>
     </div>
   </div>
+  <p *ngIf="hasReloaded">You have already started the exam. Redirecting...</p>
 </main>
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
   <p style="font-size: 20px; color: white">Loading...</p>

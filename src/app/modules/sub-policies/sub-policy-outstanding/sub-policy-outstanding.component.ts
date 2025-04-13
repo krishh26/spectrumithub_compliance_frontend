@@ -18,6 +18,7 @@ export class SubPolicyOutstandingComponent {
   dataType: string = 'EMPLOYEE';
   subPolicyDetails: any;
   settingDetails: any;
+  policyDetails: any;
 
   constructor(
     private notificationService: NotificationService,
@@ -26,7 +27,7 @@ export class SubPolicyOutstandingComponent {
     private router: Router,
     private spinner: NgxSpinnerService,
     private employeeService: EmployeeService,
-    private policyService : PolicyService
+    private policyService: PolicyService
   ) { }
 
   ngOnInit(): void {
@@ -110,11 +111,12 @@ export class SubPolicyOutstandingComponent {
     });
   }
 
-  getPolicyDetails(id : string) {
+  getPolicyDetails(id: string) {
     this.spinner.show();
     this.policyService.getPolicyDetails(id).subscribe((response) => {
       if (response?.statusCode == 200 || response?.statusCode == 201) {
-        if(response?.data?.policyType == 'For Information') {
+        this.policyDetails = response?.data;
+        if (response?.data?.policyType == 'For Information') {
           this.getSubPolicyCountAndDataForInfo();
         } else {
           this.getSubPolicyCountAndData();

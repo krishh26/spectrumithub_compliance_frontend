@@ -200,15 +200,21 @@ export class EmployeeDetailsOutstandingComponent {
     const result: any[] = [];
 
     policies.forEach(policy => {
-      if (policy.subPoliciyDetail.length > 1) {
-        policy.subPoliciyDetail.forEach((detail: any) => {
-          result.push({
-            ...policy,
-            subPoliciyDetail: [detail],
-          });
-        });
-      } else {
-        result.push(policy);
+      if (policy?.policyType == 'For Action') {
+        if (policy.subPoliciyDetail.length > 1) {
+          const data = policy?.subPoliciyDetail?.filter((el: any) => el?._id == policy?.subPoliciyList?._id);
+          if (data?.length !== 0) {
+            policy["subPoliciyDetail"] = data;
+            policy.subPoliciyDetail.forEach((detail: any) => {
+              result.push({
+                ...policy,
+                subPoliciyDetail: [detail],
+              });
+            });
+          }
+        } else {
+          result.push(policy);
+        }
       }
     });
 
@@ -221,4 +227,13 @@ export class EmployeeDetailsOutstandingComponent {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  dueDateCheck(dueDate: any): boolean {
+    const currentDate = new Date(); // Get the current date
+    const inputDate = new Date(dueDate); // Convert the dueDate to a Date object
+    // Set time to 00:00:00 for both dates to compare only the date part
+    currentDate.setHours(0, 0, 0, 0);
+    inputDate.setHours(0, 0, 0, 0);
+
+    return inputDate < currentDate; // Return true if dueDate is greater than current date
+  }
 }

@@ -2,8 +2,7 @@
   <div class="page-title  mb-3">
     <h2><a [routerLink]="[ '/sub-policies/sub-policies-list/', subPolicyDetails?.policyId]"
         [queryParams]="{ version: subPolicyDetails?.version }" class="me-2 text-dark"><i
-          class="bi bi-arrow-left-circle"></i></a> Privacy
-      and Data Policy Completed (Version : {{subPolicyDetails?.version}})</h2>
+          class="bi bi-arrow-left-circle"></i></a> {{policyDetails?.name}} (Version : {{subPolicyDetails?.version}})</h2>
   </div>
 
   <div class="card">
@@ -28,11 +27,11 @@
             <tr>
               <th scope="col">Name</th>
               <th scope="col">Version</th>
-              <th scope="col">Score</th>
+              <th scope="col" *ngIf="policyDetails?.policyType !== 'For Information'">Score</th>
               <th scope="col">Date</th>
-              <th scope="col">Result </th>
-              <th scope="col">Time Taken </th>
-              <th scope="col">Attempt </th>
+              <th scope="col" *ngIf="policyDetails?.policyType !== 'For Information'">Result </th>
+              <th scope="col" *ngIf="policyDetails?.policyType !== 'For Information'">Time Taken </th>
+              <!-- <th scope="col">Attempt </th> -->
             </tr>
           </thead>
           <tbody>
@@ -43,25 +42,36 @@
             </tr>
 
             <ng-container *ngFor="let item of dataList">
-              <tr>
+              <ng-container *ngIf="policyDetails?.policyType !== 'For Information'">
+                <tr *ngIf="item?.latestResult?.resultStatus == '1'">
+                  <td>
+                    <a [routerLink]="[ '/admin/show-exam-questions-admin',item?.resultDetails?.[0]?._id]">{{ item?.firstName }} {{ item?.lastName }} </a>
+                  </td>
+                  <!-- <td>{{ item?.firstName }} {{ item?.lastName }} </td> -->
+                  <td>Version {{ subPolicyDetails?.version }}</td>
+                  <td>{{ item?.latestResult?.score }}</td>
+                  <td>{{ item?.latestResult?.submitDate | gmtDate }}</td>
+                  <td>
+                    <span *ngIf="item?.latestResult?.resultStatus == '2'"
+                      class="btn btn-danger btn-sm rounded">Fail</span>
+                    <span *ngIf="item?.latestResult?.resultStatus == '1'"
+                      class="btn btn-success btn-sm rounded">Pass</span>
+                  </td>
+                  <td>{{ convertDecimalMinutesToMinSec(item?.latestResult?.duration)  }} Min</td>
+                  <!-- <td><a href="" class="btn btn-danger btn-sm rounded">3 Day Left</a></td> -->
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="policyDetails?.policyType == 'For Information'">
+                <tr>
+                  <td>
+                    <a [routerLink]="[ '/admin/show-exam-questions-admin',item?.resultDetails?.[0]?._id]">{{ item?.firstName }} {{ item?.lastName }} </a>
+                  </td>
+                  <!-- <td>{{ item?.firstName }} {{ item?.lastName }} </td> -->
+                  <td>Version {{ subPolicyDetails?.version }}</td>
+                  <td>{{ item?.conditionDetail?.[0]?.createdAt | gmtDate }}</td>
+                </tr>
+              </ng-container>
 
-                <td>
-                  <a [routerLink]="[ '/admin/show-exam-questions-admin',item?.resultDetails?.[0]?._id]">{{ item?.firstName }} {{ item?.lastName }} </a>
-                </td>
-
-                <!-- <td>{{ item?.firstName }} {{ item?.lastName }} </td> -->
-                <td>Version {{ subPolicyDetails?.version }}</td>
-                <td>{{ item?.latestResult?.score }}</td>
-                <td>{{ item?.latestResult?.submitDate | gmtDate }}</td>
-                <td>
-                  <span *ngIf="item?.latestResult?.resultStatus == '2'"
-                    class="btn btn-danger btn-sm rounded">Fail</span>
-                  <span *ngIf="item?.latestResult?.resultStatus == '1'"
-                    class="btn btn-success btn-sm rounded">Pass</span>
-                </td>
-                <td>{{ convertDecimalMinutesToMinSec(item?.latestResult?.duration)  }} Min</td>
-                <td><a href="" class="btn btn-danger btn-sm rounded">3 Day Left</a></td>
-              </tr>
             </ng-container>
           </tbody>
         </table>

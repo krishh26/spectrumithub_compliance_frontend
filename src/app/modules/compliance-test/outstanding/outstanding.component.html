@@ -40,7 +40,14 @@
               <th scope="col">Start</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="!showData">
+            <tr>
+              <td colspan="6">
+                <app-no-record-found></app-no-record-found>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="showData">
             <tr>
               <td *ngIf="!outstandingtestlist?.length" colspan="6">
                 <app-no-record-found></app-no-record-found>
@@ -96,7 +103,11 @@
                 </td>
                 <td>{{(item?.subPoliciyDetail?.[0]?.policyDueDate?.length > 0 ?
                   item?.subPoliciyDetail?.[0]?.policyDueDate?.[0]?.dueDate :
-                  item?.subPoliciyDetail?.[0]?.policySettingDetail?.examTimeLimit) | gmtDate }}</td>
+                  item?.subPoliciyDetail?.[0]?.policySettingDetail?.examTimeLimit) | gmtDate }}
+                  <span *ngIf="dueDateCheck(item?.subPoliciyDetail?.[0]?.policyDueDate?.length > 0 ?
+                    item?.subPoliciyDetail?.[0]?.policyDueDate?.[0]?.dueDate :
+                    item?.subPoliciyDetail?.[0]?.policySettingDetail?.examTimeLimit)"> <a class="btn btn-danger btn-sm">Due date has passed</a> </span>
+                </td>
                 <td>
                   <span
                     *ngIf="item?.subPoliciyDetail?.[0]?.conditionDetail?.length && item?.policyType != 'For Information'">

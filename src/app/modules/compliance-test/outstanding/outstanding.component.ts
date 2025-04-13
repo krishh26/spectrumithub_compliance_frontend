@@ -21,6 +21,7 @@ export class OutstandingComponent implements AfterViewInit {
   pagesize = pagination.itemsPerPage;
   totalRecords: number = pagination.totalRecords;
   searchText: FormControl = new FormControl();
+  showData: boolean = true;
 
   constructor(
     private router: Router,
@@ -72,6 +73,7 @@ export class OutstandingComponent implements AfterViewInit {
       userGroup: this.loginUser?.role == 'EMPLOYEE' ? "1" : "2"
     }
     this.spinner.show();
+    this.showData = false;
     this.outstandingtestlist = [];
     this.employeeService.getOutstandingTestList(param).subscribe(
       (response) => {
@@ -101,6 +103,7 @@ export class OutstandingComponent implements AfterViewInit {
             }
           }
         })
+
 
         for (const data of this.outstandingtestlist || []) {
           const tempData: any[] = [];
@@ -132,6 +135,7 @@ export class OutstandingComponent implements AfterViewInit {
         setTimeout(() => {
           this.outstandingtestlist = this.outstandingtestlist?.filter((element) => element?.subPoliciyDetail[0]?.resultCount < element?.subPoliciyDetail[0]?.policySettingDetail?.maximumAttempt);
           this.spinner.hide();
+          this.showData = true;
           forInfoList?.map((element: any) => {
             if (element?.policyType == 'For Information') {
               const data = element?.subPoliciyDetail?.find((el: any) => el?._id == element?.subPoliciyList?._id);
@@ -146,6 +150,7 @@ export class OutstandingComponent implements AfterViewInit {
       },
       (error) => {
         this.spinner.hide();
+        this.showData = true;
         this.notificationService.showError(error?.error?.message || 'Something went wrong!');
       }
     );
@@ -176,12 +181,16 @@ export class OutstandingComponent implements AfterViewInit {
     policies.forEach(policy => {
       if (policy?.policyType == 'For Action') {
         if (policy.subPoliciyDetail.length > 1) {
-          policy.subPoliciyDetail.forEach((detail: any) => {
-            result.push({
-              ...policy,
-              subPoliciyDetail: [detail],
+          const data = policy?.subPoliciyDetail?.filter((el: any) => el?._id == policy?.subPoliciyList?._id);
+          if (data?.length !== 0) {
+            policy["subPoliciyDetail"] = data;
+            policy.subPoliciyDetail.forEach((detail: any) => {
+              result.push({
+                ...policy,
+                subPoliciyDetail: [detail],
+              });
             });
-          });
+          }
         } else {
           result.push(policy);
         }
@@ -205,5 +214,15 @@ export class OutstandingComponent implements AfterViewInit {
     const remainingDays = Math.ceil((dueDateObj.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 
     return remainingDays > 0 ? `${remainingDays} days left` : "ReExam";
+  }
+
+  dueDateCheck(dueDate: any): boolean {
+    const currentDate = new Date(); // Get the current date
+    const inputDate = new Date(dueDate); // Convert the dueDate to a Date object
+    // Set time to 00:00:00 for both dates to compare only the date part
+    currentDate.setHours(0, 0, 0, 0);
+    inputDate.setHours(0, 0, 0, 0);
+
+    return inputDate < currentDate; // Return true if dueDate is greater than current date
   }
 }

@@ -2,8 +2,7 @@
   <div class="page-title  mb-3">
     <h2><a [routerLink]="[ '/sub-policies/sub-policies-list/', subPolicyDetails?.policyId]"
         [queryParams]="{ version: subPolicyDetails?.version }" class="me-2 text-dark"><i
-          class="bi bi-arrow-left-circle"></i></a> Privacy
-      and Data Policy Outstanding (Version : {{subPolicyDetails?.version}})</h2>
+          class="bi bi-arrow-left-circle"></i></a> {{policyDetails?.name}} (Version : {{subPolicyDetails?.version}})</h2>
   </div>
 
   <div class="card">

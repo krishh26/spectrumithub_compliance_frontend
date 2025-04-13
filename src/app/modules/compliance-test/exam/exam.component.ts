@@ -59,7 +59,7 @@ export class ExamComponent {
       } else {
         this.notificationService.showError(response?.message || 'Policy instructions not found.');
       }
-      // this.spinner.hide();
+      this.spinner.hide();
     }, (error) => {
       this.notificationService.showError(error?.error?.message || 'Policy instructions not found.');
       this.spinner.hide();
@@ -81,17 +81,16 @@ export class ExamComponent {
           return this.notificationService.showError('Questions not found.');
         }
         this.questions = response?.data?.questionList;
-        if (this.questions?.[0] == null || this.questions?.length == 0) {
-          return this.notificationService.showError('Questions not found.');
-        }
+        // if (this.questions?.[0] == null || this.questions?.length == 0) {
+        //   return this.notificationService.showError('Questions not found.');
+        // }
         localStorage.setItem('questions', JSON.stringify(this.questions));
       } else {
-        this.notificationService.showError('Questions not found.');
+        // this.notificationService.showError('Questions not found.');
       }
     }, (error) => {
       this.spinner.hide();
-      this.notificationService.showError(error?.error?.message || 'Questions not found.');
-
+      // this.notificationService.showError(error?.error?.message || 'Questions not found.');
     })
   }
 
@@ -116,31 +115,29 @@ export class ExamComponent {
     sessionStorage.removeItem('hasVisitedExamOnce');
   }
 
-
   ngOnInit() {
     this.tabId = this.generateTabId();
-
-    // Save this tab's ID
     sessionStorage.setItem('tabId', this.tabId);
-
-    // Register this tab
     this.registerTab();
-
-    // Listen for tab changes
     window.addEventListener('storage', this.handleTabChange.bind(this));
 
+    // Don't redirect anymore on reload
     const visited = sessionStorage.getItem('hasVisitedExamOnce');
-    if (visited) {
-      // Already visited → redirect
-      setTimeout(() => {
-        this.router.navigateByUrl('/compliance-test/outstanding');
-      }, 2000);
-      return;
-    }
+
+    this.loadAnswers();
+    this.loadQuestions();
+
+    // Restore current question index if saved
+    const savedIndex = localStorage.getItem('currentQuestionIndex');
+    this.currentQuestionIndex = savedIndex ? parseInt(savedIndex) : 0;
+
+    // Restore time from localStorage
+    const savedTime = localStorage.getItem('timeLeft');
+    this.timeLeft = savedTime ? parseInt(savedTime) : this.settingDetails?.timeLimit * 60;
+
+    this.startTimer();
 
     sessionStorage.setItem('hasVisitedExamOnce', 'true');
-    this.loadAnswers();
-    this.startTimer();
   }
 
   generateTabId(): string {
@@ -183,7 +180,6 @@ export class ExamComponent {
         localStorage.setItem('timeLeft', this.timeLeft.toString());
       } else {
         this.router.navigateByUrl('/compliance-test/outstanding');
-        // this.completeExam(false);
       }
     }, 1000);
   }
@@ -247,12 +243,14 @@ export class ExamComponent {
     this.loadAnswers();
     if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
+      localStorage.setItem('currentQuestionIndex', this.currentQuestionIndex.toString());
     }
   }
 
   previousQuestion() {
     if (this.currentQuestionIndex > 0) {
       this.currentQuestionIndex--;
+      localStorage.setItem('currentQuestionIndex', this.currentQuestionIndex.toString());
     }
   }
 
@@ -319,5 +317,6 @@ export class ExamComponent {
     localStorage.removeItem('answers');
     localStorage.removeItem('questions');
     localStorage.removeItem('timeLeft');
+    localStorage.removeItem('currentQuestionIndex');
   }
 }

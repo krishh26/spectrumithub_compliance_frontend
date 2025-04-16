@@ -61,6 +61,14 @@
                 Email
                 <i class="bi bi-sort-up"></i>
               </th>
+              <th (click)="sortTable('employeeIdentity')" class="sortable">
+                Employee ID
+                <i class="bi bi-sort-up"></i>
+              </th>
+              <th (click)="sortTable('jobTitle')" class="sortable">
+                Job Title
+                <i class="bi bi-sort-up"></i>
+              </th>
               <th (click)="sortTable('dateOfJoining')" class="sortable">
                 Date of Joining
                 <i class="bi bi-sort-up"></i>
@@ -106,6 +114,8 @@
                     </a>
                   </td>
                   <td>{{ employee.email }}</td>
+                  <td>{{ employee.employeeIdentity }}</td>
+                  <td>{{ employee.jobTitle }}</td>
                   <td>{{ employee.dateOfJoining | gmtDate }}</td>
                   <td>{{ employee.phone }}</td>
                   <td>{{ employee.role }}</td>

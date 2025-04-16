@@ -20,13 +20,15 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreatePasswordComponent } from './modules/auth/create-password/create-password.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { LoginCallbackComponent } from './modules/auth/login-callback/login-callback.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ResetPasswordComponent,
     ForgotPasswordComponent,
-    CreatePasswordComponent
+    CreatePasswordComponent,
+    LoginCallbackComponent
   ],
   imports: [
     BrowserModule,

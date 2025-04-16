@@ -24,82 +24,6 @@ export class AddEmployeeComponent {
   baseImageURL = environment.baseUrl;
   maxDate!: string;
   countries: any = [];
-  // countries : any = [
-  //   {
-  //     name: 'India',
-  //     states: [
-  //       'Maharashtra',
-  //       'Gujarat',
-  //       'Rajasthan',
-  //       'Karnataka',
-  //       'Tamil Nadu',
-  //       'Punjab',
-  //       'Bihar',
-  //       'West Bengal',
-  //       'Uttar Pradesh',
-  //       'Madhya Pradesh',
-  //     ],
-  //   },
-  //   {
-  //     name: 'USA',
-  //     states: [
-  //       'California',
-  //       'Texas',
-  //       'New York',
-  //       'Florida',
-  //       'Illinois',
-  //       'Ohio',
-  //       'Georgia',
-  //       'Michigan',
-  //       'Arizona',
-  //       'Pennsylvania',
-  //     ],
-  //   },
-  //   {
-  //     name: 'Canada',
-  //     states: [
-  //       'Ontario',
-  //       'British Columbia',
-  //       'Quebec',
-  //       'Alberta',
-  //       'Manitoba',
-  //       'Saskatchewan',
-  //       'Nova Scotia',
-  //       'New Brunswick',
-  //       'Prince Edward Island',
-  //       'Newfoundland',
-  //     ],
-  //   },
-  //   {
-  //     name: 'Australia',
-  //     states: [
-  //       'New South Wales',
-  //       'Victoria',
-  //       'Queensland',
-  //       'Western Australia',
-  //       'South Australia',
-  //       'Tasmania',
-  //       'Northern Territory',
-  //       'Australian Capital Territory',
-  //     ],
-  //   },
-  //   {
-  //     name: 'UK',
-  //     states: [
-  //       'England',
-  //       'Scotland',
-  //       'Wales',
-  //       'Northern Ireland',
-  //       'Greater London',
-  //       'West Midlands',
-  //       'Yorkshire',
-  //       'North West England',
-  //       'East Midlands',
-  //       'South West England',
-  //     ],
-  //   },
-  // ];
-
   states: any[] = [];
   cities: any[] = [];
 
@@ -129,6 +53,8 @@ export class AddEmployeeComponent {
       state: ['', Validators.required],
       city: ['', Validators.required],
       role: ['', Validators.required],
+      jobTitle: ['', Validators.required],
+      employeeIdentity: ['', Validators.required]
       // profileImage: [null],
     });
   }
@@ -247,6 +173,8 @@ export class AddEmployeeComponent {
             state: this.employeeData.state,
             city: this.employeeData.city,
             role: this.employeeData.role,
+            jobTitle: this.employeeData.jobTitle,
+            employeeIdentity: this.employeeData.employeeIdentity,
           });
         }
         this.spinner.hide();

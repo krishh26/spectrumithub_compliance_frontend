@@ -69,24 +69,23 @@
         <div class="row">
           <div class="col-lg-4 col-xl-4 col-md-4 colk-smn-4 col-12">
             <div class="form-group">
-              <label>Gender</label>
-              <select class="form-select" formControlName="gender">
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-              <small class="text-danger" *ngIf="submitted && f['gender'].errors?.['required']">
-                Please Select Gender
+              <label>Employee Id</label>
+              <input type="text" class="form-control" placeholder="Employee Id" formControlName="employeeIdentity"
+                required />
+              <small class="text-danger" *ngIf="submitted && f['employeeIdentity'].errors?.['required']">
+                Employee Id is required
               </small>
             </div>
           </div>
           <div class="col-lg-4 col-xl-4 col-md-4 colk-smn-4 col-12">
             <div class="form-group">
-              <label>Date of Birth</label>
-              <input type="date" class="form-control" placeholder="MM/DD/YYYY" formControlName="birthDate"
-                [max]="maxDate" required />
-              <small class="text-danger" *ngIf="submitted && f['birthDate'].errors?.['required']">
-                Date of Birth is required
+              <label>Job Title</label>
+              <input type="text" class="form-control" placeholder="Job title" formControlName="jobTitle" required />
+              <small class="text-danger" *ngIf="submitted && f['jobTitle'].errors?.['required']">
+                Job Title is required
+              </small>
+              <small class="text-danger" *ngIf="submitted && f['jobTitle'].errors?.['pattern']">
+                Only alphabets are allowed
               </small>
             </div>
           </div>
@@ -102,8 +101,32 @@
               </small>
             </div>
           </div>
+
         </div>
         <div class="row">
+          <div class="col-lg-4 col-xl-4 col-md-4 colk-smn-4 col-12">
+            <div class="form-group">
+              <label>Date of Birth</label>
+              <input type="date" class="form-control" placeholder="MM/DD/YYYY" formControlName="birthDate"
+                [max]="maxDate" required />
+              <small class="text-danger" *ngIf="submitted && f['birthDate'].errors?.['required']">
+                Date of Birth is required
+              </small>
+            </div>
+          </div>
+          <div class="col-lg-4 col-xl-4 col-md-4 colk-smn-4 col-12">
+            <div class="form-group">
+              <label>Gender</label>
+              <select class="form-select" formControlName="gender">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+              <small class="text-danger" *ngIf="submitted && f['gender'].errors?.['required']">
+                Please Select Gender
+              </small>
+            </div>
+          </div>
           <div class="col-lg-4 col-xl-4 col-md-4 colk-smn-4 col-12">
             <div class="form-group">
               <label>Joining Date</label>
@@ -114,6 +137,8 @@
               </small>
             </div>
           </div>
+        </div>
+        <div class="row">
           <div class="col-lg-4 col-xl-4 col-md-4 colk-smn-4 col-12">
             <div class="form-group">
               <label>Phone</label>
@@ -134,8 +159,6 @@
               </small> -->
             </div>
           </div>
-        </div>
-        <div class="row">
           <!-- Country Dropdown -->
           <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4 col-12">
             <div class="form-group">
@@ -151,7 +174,8 @@
               </small>
             </div>
           </div>
-
+        </div>
+        <div class="row">
           <!-- State Dropdown -->
           <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4 col-12">
             <div class="form-group">
@@ -168,6 +192,7 @@
             </div>
           </div>
 
+          <!-- City Dropdown -->
           <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4 col-12">
             <div class="form-group">
               <label>City</label>
@@ -182,19 +207,6 @@
               </small>
             </div>
           </div>
-          <!-- City Inpu  t -->
-          <!-- <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4 col-12">
-            <div class="form-group">
-              <label>City</label>
-              <input type="text" class="form-control" placeholder="City name" formControlName="city" required />
-              <small class="text-danger" *ngIf="submitted && f['city'].errors?.['required']">
-                City is required
-              </small>
-            </div>
-          </div> -->
-        </div>
-
-        <div class="row">
           <div class="col-lg-4 col-xl-4 col-md-4 colk-smn-4 col-12">
             <div class="form-group">
               <label>Role</label>

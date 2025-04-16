@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { take } from 'rxjs/operators';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { SubPoliciesService } from 'src/app/services/sub-policy/sub-policies.service';
@@ -24,6 +25,7 @@ export class ExamComponent {
   timerInterval: any;
   hasReloaded = false;
   tabId = '';
+  hasSubmitted = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -77,10 +79,10 @@ export class ExamComponent {
     this.subPoliciesService.getQuestionList(payload).subscribe((response) => {
       this.spinner.hide();
       if (response?.statusCode == 200 || response?.statusCode == 201) {
-        if (!response?.data) {
-          return this.notificationService.showError('Questions not found.');
-        }
-        this.questions = response?.data?.questionList;
+        // if (!response?.data) {
+        //   return this.notificationService.showError('Questions not found.');
+        // }
+        this.questions = response?.data?.questionList || [];
         // if (this.questions?.[0] == null || this.questions?.length == 0) {
         //   return this.notificationService.showError('Questions not found.');
         // }
@@ -255,9 +257,15 @@ export class ExamComponent {
   }
 
   completeExam(showValidation: boolean) {
+    if (this.hasSubmitted) return; // Prevent multiple submissions
+    this.hasSubmitted = true;
+
     if (this.answers?.length == 0 && showValidation) {
-      return this.notificationService.showError("Please select one answers");
+      this.notificationService.showError("Please select one answers");
+      this.hasSubmitted = false; // allow retry if validation fails
+      return;
     }
+
     const transformedArray: any[] = this.answers?.map(item => ({
       questionId: item.questionId,
       answer: Array.isArray(item.answer) ? item.answer.join(",") : item.answer.toString()
@@ -291,7 +299,7 @@ export class ExamComponent {
     console.log("Testing details", payload);
 
     this.spinner.show();
-    this.subPoliciesService.saveAnswer(payload).subscribe((response) => {
+    this.subPoliciesService.saveAnswer(payload).pipe(take(1)).subscribe((response) => {
       if (response?.statusCode == 200 || response?.statusCode == 201) {
         localStorage.removeItem('answers');
         localStorage.removeItem('questions');

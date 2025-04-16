@@ -38,15 +38,14 @@
               <p class="mb-0 text-muted">{{ employeeData?.lastName || '-' }}</p>
             </li>
             <li>
-              <p>Gender</p>
-              <p class="mb-0 text-muted">{{ employeeData?.gender || '-' }}</p>
+              <p>Employee ID</p>
+              <p class="mb-0 text-muted">{{ employeeData?.employeeIdentity || '-' }}</p>
             </li>
             <li>
-              <p>Date of Birth</p>
-              <p class="mb-0 text-muted">
-                {{ employeeData?.birthDate ? (employeeData?.birthDate | gmtDate) : '-' }}
-              </p>
+              <p>Job Title</p>
+              <p class="mb-0 text-muted">{{ employeeData?.jobTitle || '-' }}</p>
             </li>
+
             <li>
               <p>Email</p>
               <p class="mb-0 text-muted">{{ employeeData?.email || '-' }}</p>
@@ -59,9 +58,18 @@
               <p>Inactive Reason</p>
               <p class="mb-0 text-danger">{{ employeeData?.inactiveReason || '-' }}</p>
             </li>
-
             <!-- Additional details (hidden initially) -->
             <ng-container *ngIf="showAllDetails">
+              <li>
+                <p>Gender</p>
+                <p class="mb-0 text-muted">{{ employeeData?.gender || '-' }}</p>
+              </li>
+              <li>
+                <p>Date of Birth</p>
+                <p class="mb-0 text-muted">
+                  {{ employeeData?.birthDate ? (employeeData?.birthDate | gmtDate) : '-' }}
+                </p>
+              </li>
               <li>
                 <p>Date of Joining</p>
                 <p class="mb-0 text-muted">

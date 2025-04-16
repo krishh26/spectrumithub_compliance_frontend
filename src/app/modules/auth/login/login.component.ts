@@ -23,7 +23,7 @@ export class LoginComponent {
     private router: Router,
     private notificationService: NotificationService,
     private localStorageService: LocalStorageService,
-     private spinner: NgxSpinnerService,
+    private spinner: NgxSpinnerService,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],

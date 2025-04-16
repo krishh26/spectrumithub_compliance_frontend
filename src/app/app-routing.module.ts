@@ -5,10 +5,12 @@ import { LoginComponent } from './modules/auth/login/login.component';
 import { ForgotPasswordComponent } from './modules/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './modules/auth/reset-password/reset-password.component';
 import { CreatePasswordComponent } from './modules/auth/create-password/create-password.component';
+import { LoginCallbackComponent } from './modules/auth/login-callback/login-callback.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
+  { path: 'callback', component: LoginCallbackComponent },
   { path: 'forgot', component: ForgotPasswordComponent },
   { path: 'reset', component: ResetPasswordComponent },
   { path: 'create-password', component: CreatePasswordComponent },

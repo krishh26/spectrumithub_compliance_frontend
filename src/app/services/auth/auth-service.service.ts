@@ -9,7 +9,8 @@ export enum AuthEndPoint {
   LOGIN_USER = '/auth/login',
   FORGOT_PASSWORD = '/auth/forgot-password',
   RESET_PASSWORD = '/auth/reset-password',
-  CREATE_PASSWORD = '/auth/create-password'
+  CREATE_PASSWORD = '/auth/create-password',
+  CHECK_USER = '/auth/check-user'
 }
 
 @Injectable({
@@ -39,6 +40,15 @@ export class AuthServiceService {
       { headers: this.getHeader() }
     );
   }
+
+  checkRegisterUser(payload: any): Observable<any> {
+    return this.httpClient.post<any>(
+      this.baseUrl + AuthEndPoint.CHECK_USER,
+      payload,
+      { headers: this.getHeader() }
+    );
+  }
+
 
   forgotUser(payload: any): Observable<any> {
     return this.httpClient.post<any>(

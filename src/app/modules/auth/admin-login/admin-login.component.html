@@ -11,7 +11,7 @@
           </div>
           <h1 class="h2 mb-3"><strong>Sign In</strong></h1>
           <p class="lead mb-4">Welcome back</p>
-          <form [formGroup]="loginForm">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="form-group mb-3">
               <label class="form-label">Enter your email address</label>
               <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email"
@@ -23,7 +23,7 @@
                 Enter a valid email
               </small>
             </div>
-            <!-- <div class="form-group mb-4">
+            <div class="form-group mb-4">
               <label class="form-label">Enter your password</label>
               <div class="password-input-wrapper">
                 <input class="form-control form-control-lg" type="password" name="password"
@@ -39,33 +39,15 @@
               <small class="text-danger" *ngIf="submitted && f['password'].errors?.['minlength']">
                 Password must be at least 6 characters long
               </small>
-            </div> -->
+            </div>
 
-            <!-- <div class="d-grid gap-2 mt-4 text-center">
+            <div class="d-grid gap-2 mt-4 text-center">
               <button type="submit" class="btn btn-lg btn-primary">
                 Sign in
               </button>
               <a routerLink="/forgot" class="text-muted text-decoration-none">Forgot Password?</a>
-            </div> -->
+            </div>
           </form>
-          <div class="d-grid gap-2 mt-4 text-center">
-            <!-- Live environment -->
-            <!-- <button type="button" class="btn btn-lg btn-primary">
-              <a href="https://api.delphiservices.co.uk/auth/microsoft" target="_blank"
-                style="color: white; text-decoration: none;">
-                Login with Microsoft</a>
-            </button> -->
-
-            <button type="button" class="btn btn-lg btn-primary" (click)="loginWithMicrosoft()">
-              Login with Microsoft
-            </button>
-
-            <!-- Local -->
-            <!-- <button type="button" class="btn btn-lg btn-primary">
-              <a href="http://localhost:3006/auth/microsoft" target="_blank" style="color: white; text-decoration: none;">
-                Login with Microsoft</a>
-            </button> -->
-          </div>
         </div>
       </div>
     </div>

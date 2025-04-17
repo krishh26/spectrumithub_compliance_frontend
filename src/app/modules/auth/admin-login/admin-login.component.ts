@@ -5,14 +5,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthServiceService } from 'src/app/services/auth/auth-service.service';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
-import { environment } from 'src/environment/environment';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-admin-login',
+  templateUrl: './admin-login.component.html',
+  styleUrls: ['./admin-login.component.css']
 })
-export class LoginComponent {
+export class AdminLoginComponent {
   loginForm: FormGroup;
   submitted = false;
   showPassword = false;
@@ -28,7 +27,7 @@ export class LoginComponent {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      // password: ['', [Validators.required]], //Validators.minLength(6)
+      password: ['', [Validators.required]], //Validators.minLength(6)
     });
   }
 
@@ -70,25 +69,5 @@ export class LoginComponent {
 
   togglePassword() {
     this.showPassword = !this.showPassword;
-  }
-
-  loginWithMicrosoft() {
-    this.submitted = true;
-    // if (this.loginForm.invalid) {
-    //   return;
-    // }
-    console.log("this is form value", this.loginForm.value?.email);
-    this.spinner.show();
-    this.authServiceService.checkRegisterUser({ email: this.loginForm.value?.email }).subscribe((response) => {
-      if ((response?.statusCode == 200 || response?.statusCode == 201) && response?.data?.isRegisterUser) {
-        window.open(`${environment.baseUrl}/auth/microsoft`, '_blank');
-      } else {
-        this.notificationService.showError(response?.message || "User not found in system!");
-      }
-      this.spinner.hide();
-    }, (error) => {
-      this.notificationService.showError(error?.error?.message || "User not found in system!");
-      this.spinner.hide();
-    })
   }
 }

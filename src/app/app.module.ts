@@ -21,6 +21,7 @@ import { CreatePasswordComponent } from './modules/auth/create-password/create-p
 import { NgxEditorModule } from 'ngx-editor';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { LoginCallbackComponent } from './modules/auth/login-callback/login-callback.component';
+import { AdminLoginComponent } from './modules/auth/admin-login/admin-login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +29,8 @@ import { LoginCallbackComponent } from './modules/auth/login-callback/login-call
     ResetPasswordComponent,
     ForgotPasswordComponent,
     CreatePasswordComponent,
-    LoginCallbackComponent
+    LoginCallbackComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,

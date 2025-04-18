@@ -12,7 +12,7 @@
           <h1 class="h2 mb-3"><strong>Sign In</strong></h1>
           <p class="lead mb-4">Welcome back</p>
           <form [formGroup]="loginForm">
-            <div class="form-group mb-3">
+            <div class="form-group mb-3" *ngIf="!isShowOTP">
               <label class="form-label">Enter your email address</label>
               <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email"
                 formControlName="email" />
@@ -23,6 +23,16 @@
                 Enter a valid email
               </small>
             </div>
+
+            <div class="form-group mb-3" *ngIf="isShowOTP">
+              <label class="form-label">Enter OTP</label>
+              <input class="form-control form-control-lg" type="number" name="otp" placeholder="Enter your otp"
+                formControlName="otp" />
+              <small class="text-danger" *ngIf="submitted && f['otp'].errors?.['required']">
+                Please Enter OTP.
+              </small>
+            </div>
+
             <!-- <div class="form-group mb-4">
               <label class="form-label">Enter your password</label>
               <div class="password-input-wrapper">
@@ -56,18 +66,25 @@
                 Login with Microsoft</a>
             </button> -->
 
-            <button type="button" class="btn btn-lg btn-primary" (click)="loginWithMicrosoft()">
+            <!-- <button type="button" class="btn btn-lg btn-primary" (click)="loginWithMicrosoft()">
               Login with Microsoft
-            </button>
+            </button> -->
 
             <!-- Local -->
             <!-- <button type="button" class="btn btn-lg btn-primary">
               <a href="http://localhost:3006/auth/microsoft" target="_blank" style="color: white; text-decoration: none;">
                 Login with Microsoft</a>
             </button> -->
+            <button type="button" class="btn btn-lg btn-primary" (click)="submit()">
+              Proceed
+              <!-- {{ isShowOTP ? 'Sign in' : 'Proceed' }} -->
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </main>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
